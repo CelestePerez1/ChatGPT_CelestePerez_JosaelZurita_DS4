@@ -21,14 +21,14 @@ namespace ChatGPT_CelestePerez_JosaelZurita
         {
             string pregunta = textPrompt.Text;
 
-            // ? Validación de entrada vacía o solo espacios
+            //Validación de entrada vacía o solo espacios
             if (string.IsNullOrWhiteSpace(pregunta))
             {
                 MessageBox.Show("Por favor, escribe un mensaje antes de enviar.");
                 return;
             }
 
-            // ? Validación de longitud máxima
+            //Validación de longitud máxima
             if (pregunta.Length > 1000)
             {
                 MessageBox.Show("El mensaje supera el límite de 1000 caracteres. Por favor, acórtalo antes de enviarlo.");
@@ -41,10 +41,10 @@ namespace ChatGPT_CelestePerez_JosaelZurita
 
             try
             {
-                // Mostrar el mensaje del usuario en el chat
+                // Mostrar el mensaje en el chat
                 textChat.AppendText($"Tú: {pregunta}\r\n\r\n");
 
-                // Crear cliente (puedes reutilizar el de Form_Load)
+                // Crear cliente
                 var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
                 var chatClient = new OpenAI.Chat.ChatClient(model: "gpt-4o-mini", apiKey: apiKey);
 
@@ -55,7 +55,7 @@ namespace ChatGPT_CelestePerez_JosaelZurita
                 string textoRespuesta = respuesta.Value.Content[0].Text.Trim();
                 textChat.AppendText($"Asistente: {textoRespuesta}\r\n\r\n");
 
-                // ?? Scroll automático hacia el final
+                //Scroll automático hacia el final
                 textChat.SelectionStart = textChat.Text.Length;
                 textChat.ScrollToCaret();
             }

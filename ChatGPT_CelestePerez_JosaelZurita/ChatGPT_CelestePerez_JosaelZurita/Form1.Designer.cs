@@ -48,7 +48,7 @@
             // 
             // textChat
             // 
-            textChat.Location = new Point(12, 60);
+            textChat.Location = new Point(17, 60);
             textChat.Multiline = true;
             textChat.Name = "textChat";
             textChat.ReadOnly = true;
@@ -58,7 +58,7 @@
             // 
             // textPrompt
             // 
-            textPrompt.Location = new Point(112, 381);
+            textPrompt.Location = new Point(117, 381);
             textPrompt.Multiline = true;
             textPrompt.Name = "textPrompt";
             textPrompt.ScrollBars = ScrollBars.Vertical;
@@ -87,7 +87,7 @@
             // 
             // btnCls
             // 
-            btnCls.Location = new Point(12, 355);
+            btnCls.Location = new Point(12, 358);
             btnCls.Name = "btnCls";
             btnCls.Size = new Size(94, 29);
             btnCls.TabIndex = 5;
