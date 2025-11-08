@@ -51,6 +51,7 @@
             textChat.Location = new Point(12, 60);
             textChat.Multiline = true;
             textChat.Name = "textChat";
+            textChat.ReadOnly = true;
             textChat.ScrollBars = ScrollBars.Vertical;
             textChat.Size = new Size(765, 289);
             textChat.TabIndex = 1;
@@ -70,9 +71,9 @@
             label1.Font = new Font("Arial", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(703, 355);
             label1.Name = "label1";
-            label1.Size = new Size(64, 21);
+            label1.Size = new Size(25, 21);
             label1.TabIndex = 3;
-            label1.Text = "estado";
+            label1.Text = "...";
             // 
             // btnEnviar
             // 
