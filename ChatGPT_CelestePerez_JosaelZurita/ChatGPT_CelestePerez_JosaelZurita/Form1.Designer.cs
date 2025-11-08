@@ -51,7 +51,6 @@
             textChat.Location = new Point(12, 60);
             textChat.Multiline = true;
             textChat.Name = "textChat";
-            textChat.ReadOnly = true;
             textChat.ScrollBars = ScrollBars.Vertical;
             textChat.Size = new Size(765, 289);
             textChat.TabIndex = 1;
@@ -83,6 +82,7 @@
             btnEnviar.TabIndex = 4;
             btnEnviar.Text = "Enviar";
             btnEnviar.UseVisualStyleBackColor = true;
+            btnEnviar.Click += btnEnviar_Click;
             // 
             // btnCls
             // 
@@ -92,6 +92,7 @@
             btnCls.TabIndex = 5;
             btnCls.Text = "Limpiar";
             btnCls.UseVisualStyleBackColor = true;
+            btnCls.Click += btnCls_Click;
             // 
             // Form1
             // 
@@ -106,6 +107,7 @@
             Controls.Add(lblTitulo);
             Name = "Form1";
             Text = "ChatGTP";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
