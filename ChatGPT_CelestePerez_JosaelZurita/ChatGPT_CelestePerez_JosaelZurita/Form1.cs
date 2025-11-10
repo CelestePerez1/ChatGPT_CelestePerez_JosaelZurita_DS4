@@ -1,6 +1,7 @@
 using OpenAI;
 using OpenAI.Chat;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -59,9 +60,34 @@ namespace ChatGPT_CelestePerez_JosaelZurita
                 textChat.SelectionStart = textChat.Text.Length;
                 textChat.ScrollToCaret();
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException httpEx)
             {
-                MessageBox.Show("No se pudo conectar. Intenta de nuevo.");
+                // Si el error tiene un código HTTP, manejamos los casos específicos
+                if (httpEx.Data.Contains("StatusCode"))
+                {
+                    var statusCode = (HttpStatusCode)httpEx.Data["StatusCode"];
+
+                    if (statusCode == HttpStatusCode.TooManyRequests) // 429
+                    {
+                        MessageBox.Show("Límite alcanzado, espera unos segundos.");
+                    }
+                    else if (statusCode == HttpStatusCode.Unauthorized) // 401
+                    {
+                        MessageBox.Show("API key inválida o ausente.");
+                    }
+                    else if ((int)statusCode >= 500 && (int)statusCode <= 599) // 5xx
+                    {
+                        MessageBox.Show("Servicio ocupado. Reintentar.");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Error de conexión ({(int)statusCode}). Intenta de nuevo.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo conectar. Intenta de nuevo.");
+                }
             }
             catch (TaskCanceledException)
             {
