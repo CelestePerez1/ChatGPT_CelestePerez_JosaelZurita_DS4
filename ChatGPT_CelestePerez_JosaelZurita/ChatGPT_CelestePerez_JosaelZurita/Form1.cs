@@ -1,6 +1,7 @@
 using OpenAI;
 using OpenAI.Chat;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -8,7 +9,6 @@ namespace ChatGPT_CelestePerez_JosaelZurita
 {
     public partial class Form1 : Form
     {
-
         private OpenAIClient client;
 
         public Form1()
@@ -21,14 +21,14 @@ namespace ChatGPT_CelestePerez_JosaelZurita
         {
             string pregunta = textPrompt.Text;
 
-            //Validación de entrada vacía o solo espacios
+            // Validación de entrada vacía o solo espacios
             if (string.IsNullOrWhiteSpace(pregunta))
             {
                 MessageBox.Show("Por favor, escribe un mensaje antes de enviar.");
                 return;
             }
 
-            //Validación de longitud máxima
+            // Validación de longitud máxima
             if (pregunta.Length > 1000)
             {
                 MessageBox.Show("El mensaje supera el límite de 1000 caracteres. Por favor, acórtalo antes de enviarlo.");
@@ -51,13 +51,21 @@ namespace ChatGPT_CelestePerez_JosaelZurita
                 // Obtener respuesta del modelo
                 var respuesta = await chatClient.CompleteChatAsync(pregunta);
 
-                // Mostrar respuesta del asistente con salto doble
+                // Mostrar respuesta del asistente
                 string textoRespuesta = respuesta.Value.Content[0].Text.Trim();
                 textChat.AppendText($"Asistente: {textoRespuesta}\r\n\r\n");
 
-                //Scroll automático hacia el final
+                // Scroll automático hacia el final
                 textChat.SelectionStart = textChat.Text.Length;
                 textChat.ScrollToCaret();
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("No se pudo conectar. Intenta de nuevo.");
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("La solicitud tardó demasiado. Intenta de nuevo.");
             }
             catch (Exception ex)
             {
@@ -75,9 +83,7 @@ namespace ChatGPT_CelestePerez_JosaelZurita
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Obtiene la API key desde las variables de entorno del usuario
             string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-            //validaciones
             if (string.IsNullOrEmpty(apiKey))
             {
                 MessageBox.Show("No se encontró la API key en el entorno. Configúrala antes de continuar.");
@@ -88,7 +94,7 @@ namespace ChatGPT_CelestePerez_JosaelZurita
             MessageBox.Show("Conexión exitosa con OpenAI");
         }
 
-        //Limpiar campos de entrada y respuesta
+        // Limpiar campos
         private void btnCls_Click(object sender, EventArgs e)
         {
             textPrompt.Clear();
